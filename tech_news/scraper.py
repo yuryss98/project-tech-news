@@ -17,7 +17,6 @@ def fetch(url):
     return page.text
 
 
-# Requisito 2
 def scrape_updates(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
 
@@ -26,11 +25,10 @@ def scrape_updates(html_content):
     ]
 
 
-# Requisito 3
 def scrape_next_page_link(html_content):
     try:
         soup = BeautifulSoup(html_content, "html.parser")
-        next_page = soup.find("a", {"class": "next page-numbers"})['href']
+        next_page = soup.find("a", {"class": "next page-numbers"})["href"]
     except TypeError:
         return None
 
@@ -38,11 +36,25 @@ def scrape_next_page_link(html_content):
         return next_page
 
 
-# Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    soup = BeautifulSoup(html_content, "html.parser")
+
+    dict_news = {
+        "url": soup.find("link", {"rel": "canonical"})["href"],
+        "title": soup.find("h1", {"class": "entry-title"}).string.strip(),
+        "timestamp": soup.find("li", {"class": "meta-date"}).string,
+        "writer": soup.find("span", {"class": "author"}).string,
+        "reading_time": int(
+            soup.find("li", {"class": "meta-reading-time"}).text.split(" ")[0]
+        ),
+        "summary": soup.find("div", {"class": "entry-content"}).p.text.strip(),
+        "category": soup.find("a", {"class": "category-style"})
+        .find("span", {"class": "label"})
+        .text
+    }
+
+    return dict_news
 
 
-# Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
