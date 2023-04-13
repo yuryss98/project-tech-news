@@ -1,5 +1,6 @@
 import requests
 import time
+from bs4 import BeautifulSoup
 
 
 def fetch(url):
@@ -18,7 +19,11 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    soup = BeautifulSoup(html_content, "html.parser")
+
+    return [
+        tag["href"] for tag in soup.find_all("a", {"class": "cs-overlay-link"})
+    ]
 
 
 # Requisito 3
