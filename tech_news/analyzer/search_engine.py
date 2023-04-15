@@ -2,7 +2,6 @@ from tech_news.database import search_news
 from datetime import datetime
 
 
-# Requisito 7
 def search_by_title(title: str):
     news = search_news({
         "title": {"$regex": title, "$options": "i"},
@@ -14,7 +13,6 @@ def search_by_title(title: str):
     ]
 
 
-# Requisito 8
 def search_by_date(date):
     try:
         get_date = datetime.strptime(date, "%Y-%m-%d")
@@ -31,7 +29,6 @@ def search_by_date(date):
         raise ValueError('Data inválida')
 
 
-# Requisito 9
 def search_by_category(category):
     news = search_news({
         "category": {"$regex": category, "$options": "i"},
